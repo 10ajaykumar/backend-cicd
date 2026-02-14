@@ -3,9 +3,16 @@ pipeline {
 
     stages {
 
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/10ajaykumar/backend-cicd.git',
+                    branch: 'main'
+            }
+        }
+
         stage('Terraform Init') {
             steps {
-                dir('simple-test') {
+                dir('backend') {
                     sh 'terraform init'
                 }
             }
@@ -13,7 +20,7 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                dir('simple-test') {
+                dir('backend') {
                     sh 'terraform plan'
                 }
             }
@@ -21,7 +28,7 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                dir('simple-test') {
+                dir('backend') {
                     sh 'terraform apply -auto-approve'
                 }
             }
